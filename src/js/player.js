@@ -4,8 +4,8 @@ let c = canvas.getContext('2d')
 let player = {
     posX: 0,
     posY: 0,
-    dx: 10,
-    dy: 10,
+    dx: 25,
+    dy: 25,
     width: 50,
     height: 50,
     alive: true,

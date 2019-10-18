@@ -7,7 +7,7 @@ let c = canvas.getContext('2d')
 
 let scneario = {
     enemys: [
-        new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50),,
+        new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50),
     ],
 
     update(){

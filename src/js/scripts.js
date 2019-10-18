@@ -1,15 +1,10 @@
 import player from './player'
 import scenario from './scenario/main'
+import EnemyCircle from './enemys/EnemyCircle'
 const canvas = document.querySelector('canvas')
 const interfaceElement = document.querySelector('#interface')
 const buttonStart = document.querySelector('#button-start')
 let c = canvas.getContext('2d')
-
-{
-    canvas.width = 800;
-    canvas.height = 600;
-    console.log(canvas)
-}
 
 let interfaceData = {
     userPoints: 50,
@@ -17,12 +12,7 @@ let interfaceData = {
 }
 
 let game = {
-    init() {
-        this.handleInterface()
-        this.handleKeyBoard()
-        this.animate()
-        
-    },
+    running: false,
 
     handleKeyBoard() {
         window.addEventListener('keydown', (e) => {
@@ -31,23 +21,51 @@ let game = {
         })
     },
 
-    handleInterface(){
+    start() {
+        this.running = true
+        player.alive = true;
+        this.startPoints()
+        this.animate()
+    },
+
+    startPoints(){
         let h2Element = interfaceElement.children[0];
-        window.setInterval(()=>{
+        this.pointsTimer = window.setInterval(()=>{
             interfaceData.userPoints += interfaceData.pointsReward;
             h2Element.innerHTML = interfaceData.userPoints;
         }, 1000)
     },
 
     animate() {
-        requestAnimationFrame(game.animate)
-        c.clearRect(0, 0, canvas.width, canvas.height)
-        scenario.update()
+        if(game.running && player.alive){
+            requestAnimationFrame(game.animate)
+            c.clearRect(0, 0, canvas.width, canvas.height)
+            scenario.update()
+        }
+        else{
+            game.restart()
+        }
     },
+
+    restart(){
+        this.running = false;
+        window.clearInterval(this.pointsTimer)
+        interfaceData.userPoints = 50
+        interfaceData.pointsReward = 10
+        player.posX = 0
+        player.poY = 0
+        scenario.enemys = [ new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50) ]
+    }
 }
 
-buttonStart.addEventListener('click', ()=>{
-    game.init()
-})
+{
+    canvas.width = 800
+    canvas.height = 600
+    console.log(canvas)
+    game.handleKeyBoard()
+    buttonStart.addEventListener('click', ()=>{
+        game.start()
+    })
+}
 
 export { interfaceData };
