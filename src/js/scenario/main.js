@@ -6,11 +6,14 @@ const canvas = document.querySelector('canvas')
 let c = canvas.getContext('2d')
 
 let scneario = {
+    displayGrid: false,
+
     enemys: [
         new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50),
     ],
 
     update(){
+        this.setGrid(this.displayGrid)
         this.spawnEnemys()
         this.enemys.forEach((value,index)=>{
             this.enemys[index].drawCollision(player)
@@ -35,7 +38,18 @@ let scneario = {
             interfaceData.pointsReward += 10;
             console.log(this.enemys)
         }
-    }
+    },
+
+    handleGrid(el){
+        this.displayGrid = !this.displayGrid
+        this.displayGrid ? el.innerHTML = "Turn Off" : el.innerHTML = "Display Grid"
+    },
+
+    setGrid(value){
+        this.enemys.forEach((en)=>{
+            en.displayGrid = value;
+        })
+    },
 }
 
 export default scneario;

@@ -4,6 +4,7 @@ import EnemyCircle from './enemys/EnemyCircle'
 const canvas = document.querySelector('canvas')
 const interfaceElement = document.querySelector('#interface')
 const buttonStart = document.querySelector('#button-start')
+const buttonDisplayGrid = document.querySelector('#button-display-grid-collision')
 let c = canvas.getContext('2d')
 
 let interfaceData = {
@@ -65,6 +66,9 @@ let game = {
     game.handleKeyBoard()
     buttonStart.addEventListener('click', ()=>{
         game.start()
+    })
+    buttonDisplayGrid.addEventListener('click', ()=>{
+        scenario.handleGrid(buttonDisplayGrid)
     })
 }
 

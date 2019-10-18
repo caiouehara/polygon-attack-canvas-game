@@ -3,6 +3,7 @@ let c = canvas.getContext('2d')
 
 class EnemyCircle {
     constructor(posX, posY, rad) {
+        this.displayGrid = false,
         this.posX = posX
         this.posY = posY
         this.rad = rad
@@ -26,7 +27,9 @@ class EnemyCircle {
     drawCollision(char){
         this.wallCollision()
         this.charCollision(char)
-        this.collisionGrid(char)
+        if(this.displayGrid){
+            this.collisionGrid(char)
+        }
     }
 
     wallCollision(){
