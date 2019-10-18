@@ -5,17 +5,13 @@ const canvas = document.querySelector('canvas')
 let c = canvas.getContext('2d')
 
 let scneario = {
-    displayGrid: false,
-
     enemys: [
         new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50),
     ],
 
     update(){
-        this.setGrid(this.displayGrid)
         this.updateEnemys()
-        player.draw()
-        player.drawCollision()
+        this.updatePlayers()
     },
 
     updateEnemys(){
@@ -35,15 +31,14 @@ let scneario = {
         })  
     },
 
-    spawnEnemys(){
-        let newEnemy = new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50)
-        this.enemys.push(newEnemy)
+    updatePlayers(){
+        player.draw()
+        player.drawCollision()
     },
 
-    setGrid(value){
-        this.enemys.forEach((en)=>{
-            en.displayGrid = value;
-        })
+    spawnEnemy(){
+        let newEnemy = new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50)
+        this.enemys.push(newEnemy)
     },
 }
 

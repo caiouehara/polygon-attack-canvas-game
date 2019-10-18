@@ -5,7 +5,7 @@ body{
 canvas{
     background-color: rgb(59, 56, 56);
 }
-#interface{
+#hud{
     display: flex;
     flex-direction: column;
     justify-content: center;

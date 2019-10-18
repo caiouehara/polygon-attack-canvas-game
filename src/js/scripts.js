@@ -1,16 +1,9 @@
 import player from './player'
 import scenario from './scenario/main'
 import EnemyCircle from './enemys/EnemyCircle'
+import hud from './hud'
 const canvas = document.querySelector('canvas')
-const interfaceElement = document.querySelector('#interface')
-const buttonStart = document.querySelector('#button-start')
-const buttonDisplayGrid = document.querySelector('#button-display-grid-collision')
 let c = canvas.getContext('2d')
-
-let interfaceData = {
-    userPoints: 50,
-    pointsReward: 10,
-}
 
 let game = {
     running: false,
@@ -24,33 +17,15 @@ let game = {
 
     start() {
         this.running = true
-        player.alive = true;
-        this.startPoints()
+        player.alive = true
+        hud.startPoints()
         this.animate()
-    },
-
-    startPoints(){
-        let h2Element = interfaceElement.children[0];
-        this.pointsTimer = window.setInterval(()=>{
-            this.handlePoints()
-            interfaceData.userPoints += interfaceData.pointsReward;
-            h2Element.innerHTML = interfaceData.userPoints;
-        }, 1000)
-    },
-
-    handlePoints(){
-        let points = interfaceData.userPoints;
-        let phase1 = ( points % 100 === 0 )
-        if(phase1){
-            scenario.spawnEnemys()
-            interfaceData.pointsReward += 10;
-            console.log(this.enemys)
-        }
     },
 
     animate() {
         if(game.running && player.alive){
             requestAnimationFrame(game.animate)
+            hud.update()
             c.clearRect(0, 0, canvas.width, canvas.height)
             scenario.update()
         }
@@ -61,9 +36,9 @@ let game = {
 
     restart(){
         this.running = false;
-        window.clearInterval(this.pointsTimer)
-        interfaceData.userPoints = 50
-        interfaceData.pointsReward = 10
+        window.clearInterval(hud.pointsTimer)
+        hud.userPoints = 50
+        hud.pointsReward = 10
         player.posX = 0
         player.poY = 0
         scenario.enemys = [ new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50) ]
@@ -75,12 +50,7 @@ let game = {
     canvas.height = 600
     console.log(canvas)
     game.handleKeyBoard()
-    buttonStart.addEventListener('click', ()=>{
-        game.start()
-    })
-    buttonDisplayGrid.addEventListener('click', ()=>{
-        scenario.handleGrid(buttonDisplayGrid)
-    })
+    hud.init()
 }
 
-export { interfaceData };
+export default game;
