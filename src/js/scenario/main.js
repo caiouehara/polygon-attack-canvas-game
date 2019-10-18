@@ -25,10 +25,10 @@ let scneario = {
         let points = interfaceData.userPoints;
         let newEnemy = new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50)
         let phase1 = (
-            points === 100 && this.enemys.length <= 2 || 
-            points === 200 && this.enemys.length <= 3 || 
-            points === 300 && this.enemys.length <= 4 || 
-            points === 400 && this.enemys.length <= 5)
+            points === 100 && this.enemys.length <= 1 || 
+            points === 200 && this.enemys.length <= 2 || 
+            points === 300 && this.enemys.length <= 3 || 
+            points === 400 && this.enemys.length <= 4)
 
         if(phase1){
             this.enemys.push(newEnemy)
