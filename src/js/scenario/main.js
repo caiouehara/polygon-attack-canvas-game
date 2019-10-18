@@ -1,9 +1,6 @@
 import EnemyCircle from '../enemys/EnemyCircle'
 import player from '../player'
 
-const canvas = document.querySelector('canvas')
-let c = canvas.getContext('2d')
-
 let scneario = {
     enemys: [
         new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50),

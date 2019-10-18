@@ -1,8 +1,8 @@
+import game from './game'
+import scenario from './scenario/main'
 const buttonStart = document.querySelector('#button-start')
 const buttonDisplayGrid = document.querySelector('#button-display-grid-collision')
 const hudElement = document.querySelector('#hud')
-import scenario from './scenario/main'
-import game from './scripts'
 
 let hud = {
     userPoints: 50,
