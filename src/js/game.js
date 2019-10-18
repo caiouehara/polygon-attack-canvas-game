@@ -12,26 +12,34 @@ let game = {
         hud.remake()
         scenario.remake()
         this.running = true
-        hud.startPoints()
         this.animate()
     },
 
     animate() {
-        if(game.running && player.alive){
+        if (game.running && player.alive) {
             requestAnimationFrame(game.animate)
             c.clearRect(0, 0, canvas.width, canvas.height)
             scenario.update()
             hud.update()
         }
-        else{
+        else {
             game.stop()
         }
     },
 
-    stop(){
-        this.running = false;
-        // Não consigo parar o timer
-        hud.pointsTimer = window.clearInterval(hud.pointsTimer)
+    setDifficulty() {
+        let points = hud.userPoints
+        let phase1 = ( points % 100 === 0)
+
+        if (phase1) {
+            scenario.spawnEnemy()
+            hud.pointsReward += 10;
+        }
+    },
+
+    stop() {
+        this.running = false
+        window.clearInterval(hud.pointsTimer)
     }
 }
 

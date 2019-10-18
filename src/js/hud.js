@@ -9,50 +9,40 @@ let hud = {
     pointsReward: 10,
     displayGrid: false,
 
-    init(){
-        buttonStart.addEventListener('click', ()=>{
-            game.start()
-            this.startPoints()
+    init() {
+        buttonStart.addEventListener('click', () => {
+            this.handleStart()
         })
-        buttonDisplayGrid.addEventListener('click', ()=>{
+        buttonDisplayGrid.addEventListener('click', () => {
             this.handleGrid()
         })
-    },
-
-    update(){
-        this.setGrid(this.displayGrid)
-    },
-
-    startPoints(){
-        let h2Element = hudElement.children[0];
-        this.pointsTimer = window.setInterval(()=>{
-            this.handlePoints()
-            hud.userPoints += hud.pointsReward;
-            h2Element.innerHTML = hud.userPoints;
+        window.setInterval(() => {
+            this.userPoints += this.pointsReward;
+            game.setDifficulty()
         }, 1000)
     },
 
-    handleGrid(){
+    update() {
+        this.setGrid(this.displayGrid)
+        hudElement.children[0].innerHTML = this.userPoints;
+    },
+
+    handleGrid() {
         this.displayGrid = !this.displayGrid
         this.displayGrid ? buttonDisplayGrid.innerHTML = "Turn Off" : buttonDisplayGrid.innerHTML = "Display Grid"
     },
 
-    handlePoints(){
-        let points = hud.userPoints;
-        let phase1 = ( points % 100 === 0 )
-        if(phase1){
-            scenario.spawnEnemy()
-            this.pointsReward += 10;
-        }
+    handleStart() {
+        game.start()
     },
 
-    setGrid(value){
-        scenario.enemys.forEach((en)=>{
+    setGrid(value) {
+        scenario.enemys.forEach((en) => {
             en.displayGrid = value;
         })
     },
 
-    remake(){
+    remake() {
         this.userPoints = 50
         this.pointsReward = 10
     }
