@@ -19,9 +19,20 @@ class EnemyCircle {
         c.fill()
     }
 
-    move(){
-        this.posX += this.dx;
-        this.posY += this.dy;
+    move(route){
+        switch(route) {
+            case 1:
+                this.posX += this.dx;
+                this.dy = 0;
+                break;
+            case 2:
+                this.posY += this.dy;
+                this.dx = 0;
+            default:
+                this.posX += this.dx;
+                this.posY += this.dy;
+        }
+
     }
 
     drawCollision(char){

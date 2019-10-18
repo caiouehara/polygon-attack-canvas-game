@@ -1,5 +1,4 @@
 import EnemyCircle from '../enemys/EnemyCircle'
-import { interfaceData } from '../scripts';
 import player from '../player'
 
 const canvas = document.querySelector('canvas')
@@ -14,35 +13,31 @@ let scneario = {
 
     update(){
         this.setGrid(this.displayGrid)
-        this.spawnEnemys()
-        this.enemys.forEach((value,index)=>{
-            this.enemys[index].drawCollision(player)
-            this.enemys[index].move()
-            this.enemys[index].draw()
-        })
+        this.updateEnemys()
         player.draw()
         player.drawCollision()
     },
 
-    spawnEnemys(){
-        let points = interfaceData.userPoints;
-        let newEnemy = new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50)
-        let phase1 = (
-            points === 100 && this.enemys.length <= 1 || 
-            points === 200 && this.enemys.length <= 2 || 
-            points === 300 && this.enemys.length <= 3 || 
-            points === 400 && this.enemys.length <= 4)
-
-        if(phase1){
-            this.enemys.push(newEnemy)
-            interfaceData.pointsReward += 10;
-            console.log(this.enemys)
-        }
+    updateEnemys(){
+        this.enemys.forEach((value,index)=>{
+            // Define Routes
+            if (index % 2 === 0){
+                this.enemys[index].move(1)
+            }
+            else if(index % 5 === 0){
+                this.enemys[index].move(2)
+            }
+            else{
+                this.enemys[index].move()
+            }
+            this.enemys[index].draw()
+            this.enemys[index].drawCollision(player)
+        })  
     },
 
-    handleGrid(el){
-        this.displayGrid = !this.displayGrid
-        this.displayGrid ? el.innerHTML = "Turn Off" : el.innerHTML = "Display Grid"
+    spawnEnemys(){
+        let newEnemy = new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50)
+        this.enemys.push(newEnemy)
     },
 
     setGrid(value){

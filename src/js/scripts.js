@@ -32,9 +32,20 @@ let game = {
     startPoints(){
         let h2Element = interfaceElement.children[0];
         this.pointsTimer = window.setInterval(()=>{
+            this.handlePoints()
             interfaceData.userPoints += interfaceData.pointsReward;
             h2Element.innerHTML = interfaceData.userPoints;
         }, 1000)
+    },
+
+    handlePoints(){
+        let points = interfaceData.userPoints;
+        let phase1 = ( points % 100 === 0 )
+        if(phase1){
+            scenario.spawnEnemys()
+            interfaceData.pointsReward += 10;
+            console.log(this.enemys)
+        }
     },
 
     animate() {
