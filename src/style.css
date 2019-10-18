@@ -7,8 +7,14 @@ canvas{
 }
 #interface{
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     width: 25%;
     height: 50vh;
     background-color: green;
+}
+#button-start{
+    width: 25%;
+    height: 25%;
 }

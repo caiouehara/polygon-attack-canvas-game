@@ -2,7 +2,14 @@ import player from './player'
 import scenario from './scenario/main'
 const canvas = document.querySelector('canvas')
 const interfaceElement = document.querySelector('#interface')
+const buttonStart = document.querySelector('#button-start')
 let c = canvas.getContext('2d')
+
+{
+    canvas.width = 800;
+    canvas.height = 600;
+    console.log(canvas)
+}
 
 let game = {
     interface:{
@@ -10,9 +17,6 @@ let game = {
     },
 
     init() {
-        canvas.width = 800;
-        canvas.height = 600;
-        console.log(canvas)
         this.handleInterface()
         this.handleKeyBoard()
         this.animate()
@@ -41,4 +45,6 @@ let game = {
     },
 }
 
-game.init()
+buttonStart.addEventListener('click', ()=>{
+    game.init()
+})
