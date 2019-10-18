@@ -11,11 +11,12 @@ let c = canvas.getContext('2d')
     console.log(canvas)
 }
 
-let game = {
-    interface:{
-        userPoints: 0,
-    },
+let interfaceData = {
+    userPoints: 0,
+    pointsReward: 1,
+}
 
+let game = {
     init() {
         this.handleInterface()
         this.handleKeyBoard()
@@ -33,8 +34,8 @@ let game = {
     handleInterface(){
         let h2Element = interfaceElement.children[0];
         window.setInterval(()=>{
-            this.interface.userPoints += 1;
-            h2Element.innerHTML = this.interface.userPoints;
+            interfaceData.userPoints += interfaceData.pointsReward;
+            h2Element.innerHTML = interfaceData.userPoints;
         }, 1000)
     },
 
@@ -48,3 +49,5 @@ let game = {
 buttonStart.addEventListener('click', ()=>{
     game.init()
 })
+
+export { interfaceData };

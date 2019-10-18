@@ -19,6 +19,7 @@ let scneario = {
         player.draw()
         this.enemys.en1.draw()
     },
+
 }
 
 export default scneario;
