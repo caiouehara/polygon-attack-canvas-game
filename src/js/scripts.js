@@ -12,8 +12,8 @@ let c = canvas.getContext('2d')
 }
 
 let interfaceData = {
-    userPoints: 0,
-    pointsReward: 1,
+    userPoints: 50,
+    pointsReward: 10,
 }
 
 let game = {
