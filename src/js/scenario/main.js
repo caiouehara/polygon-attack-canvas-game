@@ -6,7 +6,7 @@ let c = canvas.getContext('2d')
 
 let scneario = {
     enemys: {
-        en1: new EnemyCircle(200, 100, 50),
+        en1: new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50),
     },
     update(){
         this.enemys.en1.drawCollision(player)

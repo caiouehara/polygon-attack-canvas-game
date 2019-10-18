@@ -29,11 +29,11 @@ class EnemyCircle {
 
     wallCollision(){
         // Change direction
-        if(this.posX > canvas.width || this.posY < 0){
-            this.dx =- this.dx;
+        if(this.posX > canvas.width || this.posX < 0){
+            this.dx =  -this.dx;
         }
         if(this.posY > canvas.height || this.posY < 0){
-            this.dy =- this.dy;
+            this.dy = -this.dy;
         }
     }
 
