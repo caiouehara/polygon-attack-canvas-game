@@ -7,7 +7,6 @@ const hudElement = document.querySelector('#hud')
 let hud = {
     userPoints: 50,
     pointsReward: 10,
-    pointsTimer: undefined,
     displayGrid: false,
 
     init(){
@@ -43,8 +42,7 @@ let hud = {
         let phase1 = ( points % 100 === 0 )
         if(phase1){
             scenario.spawnEnemy()
-            hud.pointsReward += 10;
-            console.log(this.enemys)
+            this.pointsReward += 10;
         }
     },
 
@@ -53,6 +51,11 @@ let hud = {
             en.displayGrid = value;
         })
     },
+
+    remake(){
+        this.userPoints = 50
+        this.pointsReward = 10
+    }
 }
 
 export default hud;

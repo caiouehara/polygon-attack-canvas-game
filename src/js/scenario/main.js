@@ -37,6 +37,13 @@ let scneario = {
         let newEnemy = new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50)
         this.enemys.push(newEnemy)
     },
+
+    remake(){
+        player.alive = true
+        player.posX = 0
+        player.posY = 0
+        this.enemys = [ new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50) ]
+    }
 }
 
 export default scneario;

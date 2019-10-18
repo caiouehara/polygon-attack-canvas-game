@@ -59,6 +59,7 @@ class EnemyCircle {
         let distance = this.getDistance( x, y, this.posX, this.posY)
         if( distance < this.rad + char.width/2){
             this.color = "red";
+            this.draw()
             char.die()
         }
     }  
