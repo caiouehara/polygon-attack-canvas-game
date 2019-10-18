@@ -39,9 +39,11 @@ class EnemyCircle {
         }
     }
 
-    charCollision(char){        
-        let distance = this.getDistance(char.posX, char.posY, this.posX, this.posY)
-        if( distance < this.rad + char.width){
+    charCollision(char){
+        let x = char.posX + char.height/2
+        let y = char.posY + char.height/2
+        let distance = this.getDistance( x, y, this.posX, this.posY)
+        if( distance < this.rad + char.width/2){
             this.color = "red";
             char.die()
         }
@@ -54,10 +56,12 @@ class EnemyCircle {
     }
 
     collisionGrid(char){
+        let x = char.posX + char.height/2
+        let y = char.posY + char.height/2
         c.beginPath()
         c.strokeStyle = "white"
         c.moveTo(this.posX, this.posY)
-        c.lineTo(char.posX + char.width/2 , char.posY + char.height/2)
+        c.lineTo(x, y)
         c.stroke()
     }
 }
