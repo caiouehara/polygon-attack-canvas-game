@@ -1,0 +1,10 @@
+body{
+    display: flex;
+    justify-content: center;
+}
+h1{
+    margin-right: 100px;
+}
+canvas{
+    background-color: rgb(59, 56, 56);
+}
