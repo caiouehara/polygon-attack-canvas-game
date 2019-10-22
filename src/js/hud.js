@@ -3,6 +3,7 @@ import scenario from './scenario/main'
 const buttonStart = document.querySelector('#button-start')
 const buttonDisplayGrid = document.querySelector('#button-display-grid-collision')
 const hudElement = document.querySelector('#hud')
+const scoreboardElement = document.querySelector('h2')
 
 let hud = {
     userPoints: 50,
@@ -24,7 +25,7 @@ let hud = {
 
     update() {
         this.setGrid(this.displayGrid)
-        hudElement.children[0].innerHTML = this.userPoints;
+        scoreboardElement.innerHTML = this.userPoints;
     },
 
     handleGrid() {
