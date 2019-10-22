@@ -28,6 +28,7 @@ class EnemyCircle {
             case 2:
                 this.posY += this.dy;
                 this.dx = 0;
+                break;
             default:
                 this.posX += this.dx;
                 this.posY += this.dy;

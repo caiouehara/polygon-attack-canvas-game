@@ -11,6 +11,7 @@ let game = {
     start() {
         hud.remake()
         scenario.remake()
+        scenario.spawnEnemy()
         this.running = true
         this.animate()
     },

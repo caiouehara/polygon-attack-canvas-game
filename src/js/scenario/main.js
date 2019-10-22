@@ -1,10 +1,10 @@
 import EnemyCircle from '../enemys/EnemyCircle'
 import player from '../player'
+const canvas = document.querySelector('canvas')
 
 let scneario = {
-    enemys: [
-        new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50),
-    ],
+    preventSpawnDistance: 50,
+    enemys: [],
 
     update(){
         this.updateEnemys()
@@ -12,19 +12,19 @@ let scneario = {
     },
 
     updateEnemys(){
-        this.enemys.forEach((value,index)=>{
+        this.enemys.forEach((currentValue ,index)=>{
             // Define Routes
             if (index % 2 === 0){
-                this.enemys[index].move(1)
+                currentValue.move(1)
             }
             else if(index % 5 === 0){
-                this.enemys[index].move(2)
+                currentValue.move(2)
             }
             else{
-                this.enemys[index].move()
+                currentValue.move()
             }
-            this.enemys[index].draw()
-            this.enemys[index].drawCollision(player)
+            currentValue.draw()
+            currentValue.drawCollision(player)
         })  
     },
 
@@ -34,15 +34,30 @@ let scneario = {
     },
 
     spawnEnemy(){
-        let newEnemy = new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50)
-        this.enemys.push(newEnemy)
+        let spawnPosX = Math.random() * canvas.width
+        let spawnPosY = Math.random() * canvas.height
+        let randomRad = Math.random() * (75-25) + 25
+        let distance = this.getDistance(player.posX, player.posY, spawnPosX, spawnPosY)
+        if(distance > this.preventSpawnDistance + player.width + randomRad){
+            let newEnemy = new EnemyCircle( spawnPosX , spawnPosY, randomRad)
+            this.enemys.push(newEnemy)
+        }
+        else {
+            this.spawnEnemy()
+        }
+    },
+
+    getDistance(x1, y1, x2, y2){
+        let xDistance = x2 - x1
+        let yDistance = y2 - y1
+        return Math.sqrt(xDistance**2 + yDistance**2)
     },
 
     remake(){
         player.alive = true
         player.posX = 0
         player.posY = 0
-        this.enemys = [ new EnemyCircle( Math.random()*800 , Math.random()*600, Math.random()*50) ]
+        this.enemys = []
     }
 }
 
