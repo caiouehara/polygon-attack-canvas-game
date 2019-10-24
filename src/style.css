@@ -6,25 +6,28 @@ canvas{
     background-color: rgb(59, 56, 56);
 }
 #hud{
+    width: 25%;
+}
+#scoreboard{
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 25%;
-    height: 35vh;
+    width: 100%;
+    height: 35%;
     background-color: rgb(65, 157, 40);
 }
-#hud h2{
+#scoreboard h2{
     margin: 0;
 }
-#hud div{
+#scoreboard div{
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 50%;
 }
-#hud button{
+#scoreboard button{
     background: #009ED8;
 	border: none;
     color: white;
@@ -32,7 +35,12 @@ canvas{
     width: 100px;
     height: 50px;
 }
-#button-start{
-    width: 25%;
-    height: 25%;
+#log {
+    background: rgb(109, 112, 113);
+    color: white;
+    width: 100%;
+    height: 65%;
+}
+#log p{
+    margin: 0;
 }
