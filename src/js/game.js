@@ -9,11 +9,24 @@ let game = {
     running: false,
 
     start() {
-        hud.remake()
-        scenario.remake()
-        scenario.spawnEnemy()
-        this.running = true
-        this.animate()
+        if(!this.running){
+            hud.remake()
+            scenario.remake()
+            scenario.spawnEnemy()
+            this.running = true
+            this.startCoutingPoints()
+            this.animate()
+        }
+        else{
+            alert('Game is already running')
+        }
+    },
+
+    startCoutingPoints(){
+        window.setInterval(() => {
+            hud.userPoints += hud.pointsReward;
+            this.setDifficulty()
+        }, 1000)
     },
 
     animate() {
@@ -40,7 +53,7 @@ let game = {
 
     stop() {
         this.running = false
-        window.clearInterval(hud.pointsTimer)
+        window.clearInterval(window.pointsTimer)
     }
 }
 

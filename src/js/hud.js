@@ -1,6 +1,4 @@
-import game from './game'
 import scenario from './scenario/main'
-const buttonStart = document.querySelector('#button-start')
 const buttonDisplayGrid = document.querySelector('#button-display-grid-collision')
 const scoreboardElement = document.querySelector('h2')
 
@@ -11,19 +9,6 @@ let hud = {
     log: {
         element: document.querySelector("#log"),
         scoreHistory: [],
-    },
-
-    init() {
-        buttonStart.addEventListener('click', () => {
-            this.handleStart()
-        })
-        buttonDisplayGrid.addEventListener('click', () => {
-            this.handleGrid()
-        })
-        window.setInterval(() => {
-            this.userPoints += this.pointsReward;
-            game.setDifficulty()
-        }, 1000)
     },
 
     update() {
@@ -40,10 +25,6 @@ let hud = {
     handleGrid() {
         this.displayGrid = !this.displayGrid
         this.displayGrid ? buttonDisplayGrid.innerHTML = "Turn Off" : buttonDisplayGrid.innerHTML = "Display Grid"
-    },
-
-    handleStart() {
-        game.start()
     },
 
     setGrid(value) {
