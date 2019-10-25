@@ -22,8 +22,8 @@ let game = {
         }
     },
 
-    startCoutingPoints(){
-        window.setInterval(() => {
+    startCoutingPoints(){   
+        window.pointTimer = setInterval(() => {
             hud.userPoints += hud.pointsReward;
             this.setDifficulty()
         }, 1000)
@@ -53,7 +53,7 @@ let game = {
 
     stop() {
         this.running = false
-        window.clearInterval(window.pointsTimer)
+        window.clearInterval(window.pointTimer)
     }
 }
 
