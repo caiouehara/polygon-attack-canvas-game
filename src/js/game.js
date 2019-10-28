@@ -9,29 +9,27 @@ let game = {
     running: false,
 
     start() {
-        if(!this.running){
-            hud.remake()
-            scenario.remake()
+        if (!this.running) {
             scenario.spawnEnemy()
             this.running = true
             this.startCoutingPoints()
-            this.animate()
+            this.loop()
         }
-        else{
+        else {
             alert('Game is already running')
         }
     },
 
-    startCoutingPoints(){   
-        window.pointTimer = setInterval(() => {
+    startCoutingPoints() {
+        this.pointTimer = setInterval(() => {
             hud.userPoints += hud.pointsReward;
             this.setDifficulty()
         }, 1000)
     },
 
-    animate() {
+    loop() {
         if (game.running && player.alive) {
-            requestAnimationFrame(game.animate)
+            requestAnimationFrame(game.loop)
             c.clearRect(0, 0, canvas.width, canvas.height)
             scenario.update()
             hud.update()
@@ -43,7 +41,7 @@ let game = {
 
     setDifficulty() {
         let points = hud.userPoints
-        let phase1 = ( points % 100 === 0)
+        let phase1 = (points % 100 === 0)
 
         if (phase1) {
             scenario.spawnEnemy()
@@ -53,7 +51,9 @@ let game = {
 
     stop() {
         this.running = false
-        window.clearInterval(window.pointTimer)
+        hud.remake()
+        scenario.remake()
+        clearInterval(this.pointTimer)
     }
 }
 
