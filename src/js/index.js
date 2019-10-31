@@ -9,6 +9,7 @@ const buttonDisplayGrid = document.querySelector('#button-display-grid-collision
 const hudElement = document.querySelector('#hud')
 const logElement = document.querySelector("#log")
 const scoreboardElement = document.querySelector('h2')
+const bananaImage = document.querySelector('#banana-image')
 
 // Canvas
 let c = canvas.getContext('2d')
@@ -40,6 +41,10 @@ function loop() {
         c.fillStyle = enemy.color
         c.arc(enemy.posX, enemy.posY, enemy.rad, 0, Math.PI * 2)
         c.fill()
+    }
+    for (let bananaID in game.bananas) {
+        const banana = game.bananas[bananaID]
+        c.drawImage(bananaImage, banana.posX, banana.posY);
     }
 }
 

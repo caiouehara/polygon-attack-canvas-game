@@ -1,5 +1,6 @@
 import { Enemy } from './Enemy'
 import { Player } from './Player'
+import { Banana } from './Banana'
 import { setWallCollision, setCharCollision, changeObjDirection, getDistance } from './game-functions'
 
 const canvas = document.querySelector('canvas')
@@ -19,6 +20,7 @@ let game = {
         player1: new Player(),
     },
     enemys: [new Enemy(200, 200, 25)],
+    bananas: [new Banana(200, 200)],
 
     update() {
         for (let playerID in this.players) {
