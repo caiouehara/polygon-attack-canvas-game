@@ -1,60 +1,99 @@
-import scenario from './scenario/main'
-import hud from './hud'
-import player from './player'
+import { Enemy } from './Enemy'
+import { Player } from './Player'
+import { setWallCollision, setCharCollision, changeObjDirection, getDistance } from './game-functions'
 
 const canvas = document.querySelector('canvas')
-let c = canvas.getContext('2d')
 
 let game = {
     running: false,
+    user: {
+        points: 10,
+        pointsReward: 30,
+    },
+    hud: {
+        displayGrid: false,
+        scoreHistory: [],
+    },
 
-    start() {
-        if (!this.running) {
-            scenario.spawnEnemy()
-            this.running = true
-            this.startCoutingPoints()
-            this.loop()
+    players: {
+        player1: new Player(),
+    },
+    enemys: [new Enemy(200, 200, 25)],
+
+    update() {
+        for (let playerID in this.players) {
+            const player = this.players[playerID]
+            // Checking if all players are alive
+            if(!player.alive){
+                game.stop()
+            }
+            setWallCollision.call(player)
         }
-        else {
-            alert('Game is already running')
+        for (let enemy of this.enemys) {
+            changeObjDirection.call(enemy)
+            setCharCollision.call(enemy)
+            enemy.move()
         }
     },
 
     startCoutingPoints() {
-        this.pointTimer = setInterval(() => {
-            hud.userPoints += hud.pointsReward;
-            this.setDifficulty()
+        // set pointTimer reference on global (to use "game.stop()")
+        window.pointTimer = setInterval(() => {
+            let phase1 = (this.user.points % 100 === 0)
+
+            this.user.points += this.user.pointsReward;
+
+            if (phase1) {
+                this.spawnEnemy()
+                this.user.pointsReward + 10;
+            }
         }, 1000)
     },
 
-    loop() {
-        if (game.running && player.alive) {
-            requestAnimationFrame(game.loop)
-            c.clearRect(0, 0, canvas.width, canvas.height)
-            scenario.update()
-            hud.update()
+    spawnEnemy() {
+        let enemyRadBetween = [75, 25]
+        let preventSpawnDistance = 25
+
+        let spawnPosX = Math.random() * canvas.width
+        let spawnPosY = Math.random() * canvas.height
+        let randomRad = Math.random() * (enemyRadBetween[0] - enemyRadBetween[1]) + enemyRadBetween[1]
+
+        let isProtect = false
+
+        // protecting all players
+        for (let player in this.players) {
+            let distance = getDistance(player.posX, player.posY, spawnPosX, spawnPosY)
+            isProtect = !(distance > preventSpawnDistance + player.width + randomRad)
         }
-        else {
-            game.stop()
-        }
+
+        isProtect ? this.enemys.push(new Enemy(spawnPosX, spawnPosY, randomRad)) && this.setEnemyRoutes() : this.spawnEnemy()
     },
 
-    setDifficulty() {
-        let points = hud.userPoints
-        let phase1 = (points % 100 === 0)
-
-        if (phase1) {
-            scenario.spawnEnemy()
-            hud.pointsReward += 10;
-        }
+    setEnemyRoutes() {
+        this.enemys.forEach((cv, index) => {
+            if (index % 5 === 0) {
+                cv.routeType = 0;
+            }
+            else if (index % 2 === 0) {
+                cv.routeType = 1
+            }
+            else {
+                cv.routeType = 2
+            }
+        })
     },
 
-    stop() {
-        this.running = false
-        hud.remake()
-        scenario.remake()
-        clearInterval(this.pointTimer)
+    stop(){
+        // stop loops
+        this.running = false // stop animationFrame loop 
+        clearInterval(pointTimer)
+        // creating Log
+        this.hud.scoreHistory.push(`<p> Score: ${this.user.points} </p>`)
+        // remake
+        this.user = { points: 10, pointsReward: 30 },
+        this.enemys = [ new Enemy(200, 200, 25)]
+        this.players.player1 = new Player() // have to change to userID
     }
 }
 
-export default game;
+export default game

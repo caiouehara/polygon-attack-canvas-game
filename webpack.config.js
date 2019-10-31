@@ -3,8 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   entry: [
-    './src/scss/main.scss',
-    './src/js/scripts.js'
+    './src/scss/index.scss',
+    './src/js/index.js'
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
