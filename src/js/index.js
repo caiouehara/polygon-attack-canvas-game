@@ -91,13 +91,9 @@ addEventListener('keydown', (e) => {
 })
 
 buttonStart.addEventListener('click', () => {
-    // Prevent Double Points Timer
-    if (!game.pointsTimer) {
-        game.startCoutingPoints()
-    }
-    // Prevent Double game starts
     if (!game.running) {
         game.running = true;
+        game.startCoutingPoints()
     }
 })
 buttonDisplayGrid.addEventListener('click', () => {
