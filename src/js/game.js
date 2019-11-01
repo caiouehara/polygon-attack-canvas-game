@@ -33,8 +33,15 @@ let game = {
         }
         for (let enemy of this.enemys) {
             changeObjDirection.call(enemy)
-            setCharCollision.call(enemy)
+            setCharCollision.call(enemy, enemy.rad)
             enemy.move()
+        }
+        for (let banana of this.bananas) {
+            setCharCollision.call(banana, 50, ()=>{
+                console.log('teste')
+            })
+            changeObjDirection.call(banana)
+            // banana.move()
         }
     },
 

@@ -17,16 +17,29 @@ export function setWallCollision() {
     }
 }
 
-export function setCharCollision() {
+export function setCharCollision(objectSize, cb) {
     for(let playerID in game.players){
         const player = game.players[playerID]
+
+        // Set Player pivot in center (expects a square player)
         let x = player.posX + player.height / 2
         let y = player.posY + player.height / 2
+        
         let distance = getDistance(x, y, this.posX, this.posY)
-        if (distance < this.rad + player.width / 2) {
-            this.color = "red";
-            player.color = "red";
-            player.alive = false;
+        // Condtion for all types of Object
+        let cond = distance < objectSize + player.width / 2
+
+        if (cond) {
+            // Set a callback after Collid
+            if(cb){
+                cb()
+            }
+            // Default Collid Trigger
+            else{
+                this.color = "red";
+                player.color = "red";
+                player.alive = false;
+            }
         }
     }  
 }
