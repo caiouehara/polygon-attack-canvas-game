@@ -1,6 +1,26 @@
 import game from './game' // One import another
 const canvas = document.querySelector('canvas')
 
+export function freezeEnemys(time, defaultSpeedX, defaultSpeedY) {
+    // declaring Default Speed in case isn't passed
+    if(!defaultSpeedX || !defaultSpeedY){
+        defaultSpeedX = 5
+        defaultSpeedY = 5   
+    }
+    // Updating
+    for (let enemy of game.enemys) {
+        enemy.dx = 0
+        enemy.dy = 0
+    }
+    // Set Default
+    setTimeout(()=>{
+        for (let enemy of game.enemys) {
+            enemy.dx = defaultSpeedX
+            enemy.dy = defaultSpeedY
+        }
+    } , time)
+}
+
 export function setWallCollision() {
     let wallReactionForce = 10;
     if (this.posX <= 0) {
@@ -18,30 +38,30 @@ export function setWallCollision() {
 }
 
 export function setCharCollision(objectSize, cb) {
-    for(let playerID in game.players){
+    for (let playerID in game.players) {
         const player = game.players[playerID]
 
         // Set Player pivot in center (expects a square player)
         let x = player.posX + player.height / 2
         let y = player.posY + player.height / 2
-        
+
         let distance = getDistance(x, y, this.posX, this.posY)
         // Condtion for all types of Object (object size have to be 1/2 of original)
         let cond = distance < objectSize + player.width / 2
 
         if (cond) {
             // Set a callback after Collid
-            if(cb){
+            if (cb) {
                 cb()
             }
             // Default Collid Trigger
-            else{
+            else {
                 this.color = "red";
                 player.color = "red";
                 player.alive = false;
             }
         }
-    }  
+    }
 }
 
 export function changeObjDirection() {

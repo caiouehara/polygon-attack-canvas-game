@@ -1,7 +1,7 @@
 import { Enemy } from './Enemy'
 import { Player } from './Player'
 import { Banana } from './Banana'
-import { setWallCollision, setCharCollision, changeObjDirection, getDistance } from './game-functions'
+import { setWallCollision, setCharCollision, changeObjDirection, getDistance, freezeEnemys } from './game-functions'
 
 const canvas = document.querySelector('canvas')
 
@@ -38,7 +38,7 @@ let game = {
         }
         for (let banana of this.bananas) {
             setCharCollision.call(banana, banana.width, ()=>{
-                console.log('teste')
+                freezeEnemys(1000)
             })
             changeObjDirection.call(banana)
             banana.move()
@@ -48,6 +48,7 @@ let game = {
     startCoutingPoints() {
         // set pointTimer reference on global (to use "game.stop()")
         window.pointTimer = setInterval(() => {
+            // Handle Spawns
             let phase1 = (this.user.points % 100 === 0)
 
             this.user.points += this.user.pointsReward;
