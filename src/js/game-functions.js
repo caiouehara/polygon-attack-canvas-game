@@ -26,7 +26,7 @@ export function setCharCollision(objectSize, cb) {
         let y = player.posY + player.height / 2
         
         let distance = getDistance(x, y, this.posX, this.posY)
-        // Condtion for all types of Object
+        // Condtion for all types of Object (object size have to be 1/2 of original)
         let cond = distance < objectSize + player.width / 2
 
         if (cond) {

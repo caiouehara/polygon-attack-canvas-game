@@ -5,6 +5,8 @@ export class Banana {
         this.posY = posY
         this.dx = 5
         this.dy = 5
+        this.width = 125
+        this.height = 125
     }
 
     move(){

@@ -55,8 +55,15 @@ function updateHud() {
     let playerID = game.players.player1 //have to use UserID
     // Display hud
     if (game.hud.displayGrid) {
-        game.enemys.forEach( en => {
-            createGrid(playerID, en)
+        game.enemys.forEach( cv => {
+            createGrid(playerID, cv)
+        })
+        game.bananas.forEach( cv => {
+            createGrid(playerID, cv)
+            // Create Collision Square
+            c.beginPath()
+            c.strokeStyle = "white"
+            c.strokeRect(cv.posX, cv.posY, cv.width, cv.height)
         })
     }
 }
