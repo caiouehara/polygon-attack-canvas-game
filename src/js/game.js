@@ -45,17 +45,21 @@ let game = {
         }
     },
 
-    startCoutingPoints() {
+    start() {
         // set pointTimer reference on global (to use "game.stop()")
         window.pointTimer = setInterval(() => {
             // Handle Spawns
             let phase1 = (this.user.points % 100 === 0)
+            let isToSpawnBanana = (this.user.points % 200 === 0)
 
             this.user.points += this.user.pointsReward;
 
             if (phase1) {
                 this.spawn('enemy')
                 this.user.pointsReward + 10;
+            }
+            if(isToSpawnBanana){
+                this.spawn('banana')
             }
         }, 1000)
     },
@@ -105,12 +109,11 @@ let game = {
     stop() {
         // stop loops
         this.running = false // stop animationFrame loop 
-        clearInterval(pointTimer)
         // creating Log
         this.hud.scoreHistory.push(`<p> Score: ${this.user.points} </p>`)
         // remake
-        this.user = { points: 10, pointsReward: 30 },
-            this.enemys = [new Enemy(200, 200, 25)]
+        this.user = { points: 10, pointsReward: 30 }
+        this.enemys = [new Enemy(200, 200, 25)]
         this.players.player1 = new Player() // have to change to userID
     }
 }

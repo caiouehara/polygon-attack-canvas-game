@@ -23,6 +23,8 @@ function loop() {
     window.animationFrame = requestAnimationFrame(loop)
 
     if (!game.running) {
+        clearInterval(pointTimer)
+        cancelAnimationFrame(animationFrame)
         return null;
     }
 
@@ -105,7 +107,7 @@ addEventListener('keydown', (e) => {
 buttonStart.addEventListener('click', () => {
     if (!game.running) {
         game.running = true;
-        game.startCoutingPoints()
+        game.start()
     }
 })
 buttonDisplayGrid.addEventListener('click', () => {
