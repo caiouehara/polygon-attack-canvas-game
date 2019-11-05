@@ -20,7 +20,7 @@ let game = {
         player1: new Player(),
     },
     enemys: [new Enemy(200, 200, 25)],
-    bananas: [new Banana(200, 200)],
+    bananas: [],
 
     update() {
         for (let playerID in this.players) {
@@ -46,8 +46,7 @@ let game = {
     },
 
     start() {
-        // set pointTimer reference on global (to use "game.stop()")
-        window.pointTimer = setInterval(() => {
+        this.pointTimer = setInterval(() => {
             // Handle Spawns
             let phase1 = (this.user.points % 100 === 0)
             let isToSpawnBanana = (this.user.points % 200 === 0)
@@ -109,11 +108,13 @@ let game = {
     stop() {
         // stop loops
         this.running = false // stop animationFrame loop 
+        clearInterval(this.pointTimer)
         // creating Log
         this.hud.scoreHistory.push(`<p> Score: ${this.user.points} </p>`)
         // remake
         this.user = { points: 10, pointsReward: 30 }
         this.enemys = [new Enemy(200, 200, 25)]
+        this.bananas = []
         this.players.player1 = new Player() // have to change to userID
     }
 }

@@ -19,12 +19,9 @@ canvas.style.backgroundColor = 'black';
 
 // Rendering
 function loop() {
-    // set animationFrame reference on global (to use "game.stop()")
-    window.animationFrame = requestAnimationFrame(loop)
+    requestAnimationFrame(loop)
 
     if (!game.running) {
-        clearInterval(pointTimer)
-        cancelAnimationFrame(animationFrame)
         return null;
     }
 
