@@ -1,9 +1,4 @@
-import { Enemy } from './Enemy'
-import { Player } from './Player'
-import { Banana } from './Banana'
-import { setWallCollision, setCharCollision, changeObjDirection, getDistance, freezeEnemys } from './game-functions'
-
-const canvas = document.querySelector('canvas')
+import { setWallCollision, setCharCollision, changeObjDirection, getDistance, freezeEnemys, spawn, setEnemyRoutes } from './game-functions'
 
 let game = {
     running: false,
@@ -16,21 +11,22 @@ let game = {
         scoreHistory: [],
     },
 
-    players: {
-        player1: new Player(),
+    player: {
+        posX: 50,
+        posY: 50,
+        dx: 10,
+        dy: 10,
+        width: 50,
+        height: 50,
+        color: 'white',
     },
-    enemys: [new Enemy(200, 200, 25)],
+
+    enemys: [],
     bananas: [],
 
     update() {
-        for (let playerID in this.players) {
-            const player = this.players[playerID]
-            // Checking if all players are alive
-            if (!player.alive) {
-                game.stop()
-            }
-            setWallCollision.call(player)
-        }
+        setWallCollision.call(this.player)
+
         for (let enemy of this.enemys) {
             changeObjDirection.call(enemy)
             setCharCollision.call(enemy, enemy.rad)
@@ -46,76 +42,57 @@ let game = {
     },
 
     start() {
+        this.running = true;
+        spawn('enemy')
         this.pointTimer = setInterval(() => {
             // Handle Spawns
-            let phase1 = (this.user.points % 100 === 0)
-            let isToSpawnBanana = (this.user.points % 200 === 0)
+            let condToSpawnEnemy = (this.user.points % 100 === 0)
+            let condToSpawnBanana = (this.user.points % 200 === 0)
 
             this.user.points += this.user.pointsReward;
 
-            if (phase1) {
-                this.spawn('enemy')
+            if (condToSpawnEnemy) {
+                spawn('enemy')
                 this.user.pointsReward + 10;
             }
-            if(isToSpawnBanana){
-                this.spawn('banana')
+            if (condToSpawnBanana) {
+                spawn('banana')
             }
         }, 1000)
     },
 
-    spawn(obj) {
-        let enemyRadBetween = [75, 25]
-        let preventSpawnDistance = 25
-
-        let spawnPosX = Math.random() * canvas.width
-        let spawnPosY = Math.random() * canvas.height
-        let randomRad = Math.random() * (enemyRadBetween[0] - enemyRadBetween[1]) + enemyRadBetween[1]
-        let bananaWidht = new Banana().width
-
-        let isProtect = false
-
-        // protecting all players
-        for (let player in this.players) {
-            let distance = getDistance(player.posX, player.posY, spawnPosX, spawnPosY)
-            switch (obj) {
-                case 'enemy':
-                    isProtect = !(distance > preventSpawnDistance + player.width + randomRad)
-                    isProtect ? this.enemys.push(new Enemy(spawnPosX, spawnPosY, randomRad)) && this.setEnemyRoutes() : this.spawn('enemy')
-                    break
-                case 'banana':
-                    isProtect = !(distance > preventSpawnDistance + player.width + bananaWidht )
-                    isProtect ? this.bananas.push(new Banana(spawnPosX, spawnPosY)) : this.spawn('banana')
-                    break
-            }
-        }
-    },
-
-    setEnemyRoutes() {
-        for (let enemyID in this.enemys) {
-            const enemy = this.enemys[enemyID]
-            if (enemyID % 5 === 0) {
-                enemy.routeType = 0
-            }
-            else if (enemyID % 2 === 0) {
-                enemy.routeType = 1
-            }
-            else {
-                enemy.routeType = 2
-            }
+    handleKeyboard(key) {
+        if(!this.running) return
+        switch (key) {
+            case 'w':
+                this.player.posY -= this.player.dy
+                break
+            case 's':
+                this.player.posY += this.player.dy
+                break
+            case 'a':
+                this.player.posX -= this.player.dx
+                break
+            case 'd':
+                this.player.posX += this.player.dx
+                break
         }
     },
 
     stop() {
-        // stop loops
-        this.running = false // stop animationFrame loop 
+        this.running = false
         clearInterval(this.pointTimer)
+
         // creating Log
         this.hud.scoreHistory.push(`<p> Score: ${this.user.points} </p>`)
         // remake
         this.user = { points: 10, pointsReward: 30 }
-        this.enemys = [new Enemy(200, 200, 25)]
+        
+        this.enemys = []
         this.bananas = []
-        this.players.player1 = new Player() // have to change to userID
+
+        this.player.posX = 0;
+        this.player.posY = 0;
     }
 }
 
